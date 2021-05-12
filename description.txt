@@ -1,9 +1,9 @@
 A realtime group chat application using Graphql and ES6 with JWT authentication.
 
 Details:
-- Build a group chat application using graphql and es6 (both of these are required)
+- Build a group chat application using graphql and es6.
 - Integrate JWT authentication in the app using email and password
-- Allow users to message on any group based on groupId
+- Allow users to message on any group based on groupId.
 - Build a paginated API to fetch all the existing groups in the system (User cannot create a new group and can only message in one of the existing group).
 - Use mongodb as the database, a free mongodb cloud database can be created on MongoDb Atlas
 - Use graphql subscriptions for realtime message distribution to other users.

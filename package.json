@@ -1,0 +1,25 @@
+{
+  "name": "ChatApp",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nabanitabag/ChatApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nabanitabag/ChatApp/issues"
+  },
+  "homepage": "https://github.com/nabanitabag/ChatApp#readme",
+  "description": "",
+  "dependencies": {
+    "apollo-server": "^2.24.0",
+    "graphql": "^15.5.0"
+  }
+}
