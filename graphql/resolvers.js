@@ -2,11 +2,12 @@ const bcrypt = require('bcryptjs');
 const {User} = require('../models');
 const {UserInputError, AuthenticationError}  = require('appolo-server')
 const jwt = require('jsonwebtoken');
+const {JWT_SECRET} = require('../config/env.json');
 
 module.exports = {
 
 Query: {
-  getUsers: async() => {
+  getUsers: async(_, __, context) => {
     // const users = [
     //   {
     //     id: 1,
@@ -15,11 +16,26 @@ Query: {
     //   },
     // ]
     try{
-      const users = await User.findAll();
+
+      let user;
+      if(context.req && context.req.headers.authorization){
+        const token = context.req.headers.authorization.split('Bearer')[1];
+        jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
+          if(err){
+            throw new AuthenticationError('Unauthenticated')
+          }
+          user = decodedToken
+        });
+      }
+
+      const users = await User.findAll({
+        where: {username: {[Op.ne]: user.username}},
+      });
       return users;
     }
     catch(err){
     console.log(err);
+    throw err;
     }
   },
 
@@ -55,13 +71,15 @@ Query: {
 
       const token = jwt.sign(
         { username },
-        'secret jibberish',
+        JWT_SECRET,
         {expiresIn: '1h'}
       );
 
-      user.token = token;
-
-      return user;
+      return {
+        ...user.toJSON(),
+        createdAt:user.createdAt.toISOString(),
+        token
+      };
 
     } catch (err) {
       console.log(err);
